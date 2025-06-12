@@ -4,13 +4,17 @@ import "fmt"
 
 func main() {
 	var accountBalance = 1000.0
-
+	fmt.Println("Welcome to Go Bank!")
 	//for is the only type of loop in golang
 	// the below is a loop that starts at zero
 	// then states that i can't be greater than 2
 	//and finally the last part increases the runs of the loop
-	for i := 0; i < 2; i++ {
-		fmt.Println("Welcome to Go Bank!")
+	//below currently the for loop will go on forever unless closed
+	// here below is how to add a set number of loops
+	//i := 0; i < 2; i++
+
+	for {
+
 		fmt.Println("What do you want to do?")
 		fmt.Println("1. Check balance")
 		fmt.Println("2. Deposit money")
@@ -33,7 +37,8 @@ func main() {
 			if depositAmount <= 0 {
 				fmt.Println("Invalid amount. Must be greater than 0.")
 				//by adding the return the code will stop after this point.
-				return
+				//return
+				continue
 			}
 
 			accountBalance += depositAmount
@@ -46,7 +51,9 @@ func main() {
 			if withdrawAmount <= 0 {
 				fmt.Println("Invalid amount. Must be greater than 0.")
 				//by adding the return the code will stop after this point.
-				return
+				//return
+				//skips the rest of the loop
+				continue
 			}
 
 			if withdrawAmount > accountBalance {
@@ -58,6 +65,12 @@ func main() {
 			fmt.Println("Balance updated! New amount: ", accountBalance)
 		} else {
 			fmt.Println("Have a good day")
+			//return exits if you are in a for loop or not but it closes the whole program
+			//return
+			//break closes just the for loop but everything else runs
+			break
 		}
 	}
+
+	fmt.Println("Thanks for choosing my bank")
 }
