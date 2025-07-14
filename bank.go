@@ -1,9 +1,50 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"os"
+	"strconv"
+)
 
+const accountBalanceFile = "balance.txt"
+
+//the above creates a global value
+
+func getBalanceFromFile() (float64, error) {
+	data, err := os.ReadFile(accountBalanceFile)
+
+	if err != nil {
+		return 1000, errors.New("Failed to find balance file.")
+	}
+	// the above if statment is how to handle potential errors in golang
+	balanceText := string(data)
+	balance, err := strconv.ParseFloat(balanceText, 64)
+
+	if err != nil {
+		return 1000, errors.New("Failed to parse stored balance value.")
+	}
+
+	return balance, nil
+}
+
+//the underscore tell go to not worry about the error if one happens
+
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	os.WriteFile("balance.txt", []byte(balanceText), 0644)
+}
+
+// file 0644 is the linux way of giving permissions to a file
 func main() {
-	var accountBalance = 1000.0
+	var accountBalance, err = getBalanceFromFile()
+
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("------")
+	}
+
 	fmt.Println("Welcome to Go Bank!")
 	//for is the only type of loop in golang
 	// the below is a loop that starts at zero
@@ -47,6 +88,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Println("Balance updated! New amount: ", accountBalance)
+			writeBalanceToFile(accountBalance)
 		case 3:
 			fmt.Print("Withdraw amount: ")
 			var withdrawAmount float64
@@ -67,6 +109,7 @@ func main() {
 
 			accountBalance += withdrawAmount
 			fmt.Println("Balance updated! New amount: ", accountBalance)
+			writeBalanceToFile(accountBalance)
 		default:
 			fmt.Println("Have a good day")
 			fmt.Println("Thanks for choosing my bank")
