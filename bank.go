@@ -27,9 +27,13 @@ func main() {
 
 		fmt.Println("Your choice:", choice)
 
-		if choice == 1 {
+		//if you have an application where you need
+		// to break out of a loop and continue the application then you must use
+		// if else statements will be the only way to go.
+		switch choice {
+		case 1:
 			fmt.Println("Your balance is", accountBalance)
-		} else if choice == 2 {
+		case 2:
 			fmt.Print("Your deposit: ")
 			var depositAmount float64
 			fmt.Scan(&depositAmount)
@@ -43,7 +47,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Println("Balance updated! New amount: ", accountBalance)
-		} else if choice == 3 {
+		case 3:
 			fmt.Print("Withdraw amount: ")
 			var withdrawAmount float64
 			fmt.Scan(&withdrawAmount)
@@ -58,19 +62,16 @@ func main() {
 
 			if withdrawAmount > accountBalance {
 				fmt.Println("Invalid amount. Your withdraw can't exceed your balance.")
-				return
+				continue
 			}
 
 			accountBalance += withdrawAmount
 			fmt.Println("Balance updated! New amount: ", accountBalance)
-		} else {
+		default:
 			fmt.Println("Have a good day")
-			//return exits if you are in a for loop or not but it closes the whole program
-			//return
-			//break closes just the for loop but everything else runs
-			break
+			fmt.Println("Thanks for choosing my bank")
+			return
 		}
-	}
 
-	fmt.Println("Thanks for choosing my bank")
+	}
 }
