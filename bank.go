@@ -43,7 +43,9 @@ func main() {
 		fmt.Println("ERROR")
 		fmt.Println(err)
 		fmt.Println("------")
+		return
 	}
+	//return can end the program but panic("can't continue makes the program look more like an error and crash")
 
 	fmt.Println("Welcome to Go Bank!")
 	//for is the only type of loop in golang
