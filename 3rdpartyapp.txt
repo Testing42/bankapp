@@ -1,0 +1,13 @@
+to get a 3rd party app installed you can get the github url
+
+and download it like the example below
+
+go get github.com/Pallinder/go-randomdata
+
+you can fing packages using the search engine
+
+https://pkg.go.dev/
+
+using the cmd will add the package to go.sum and go.mod
+
+Now you can add the package as if you made it yourself by importing it

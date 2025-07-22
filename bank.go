@@ -1,43 +1,21 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os"
-	"strconv"
+
+	"example.com/bank/fileops"
+	"github.com/Pallinder/go-randomdata"
 )
+
+//the example is found in
 
 const accountBalanceFile = "balance.txt"
 
 //the above creates a global value
 
-func getFloatFromFile(fileName string) (float64, error) {
-	data, err := os.ReadFile(fileName)
-
-	if err != nil {
-		return 1000, errors.New("Failed to find file.")
-	}
-	// the above if statment is how to handle potential errors in golang
-	valueText := string(data)
-	value, err := strconv.ParseFloat(valueText, 64)
-
-	if err != nil {
-		return 1000, errors.New("Failed to parse stored value.")
-	}
-
-	return value, nil
-}
-
-//the underscore tell go to not worry about the error if one happens
-
-func writeFloatToFile(value float64, fileName string) {
-	balanceText := fmt.Sprint(value)
-	os.WriteFile(fileName, []byte(balanceText), 0644)
-}
-
 // file 0644 is the linux way of giving permissions to a file
 func main() {
-	var accountBalance, err = getFloatFromFile(accountBalanceFile)
+	var accountBalance, err = fileops.GetFloatFromFile(accountBalanceFile)
 
 	if err != nil {
 		fmt.Println("ERROR")
@@ -48,6 +26,9 @@ func main() {
 	//return can end the program but panic("can't continue makes the program look more like an error and crash")
 
 	fmt.Println("Welcome to Go Bank!")
+	fmt.Println("Reach us 24/7", randomdata.PhoneNumber())
+	//Look at the module documentation to know how to call the third party package
+
 	//for is the only type of loop in golang
 	// the below is a loop that starts at zero
 	// then states that i can't be greater than 2
@@ -85,7 +66,7 @@ func main() {
 
 			accountBalance += depositAmount
 			fmt.Println("Balance updated! New amount: ", accountBalance)
-			writeFloatToFile(accountBalance, accountBalanceFile)
+			fileops.WriteFloatToFile(accountBalance, accountBalanceFile)
 		case 3:
 			fmt.Print("Withdraw amount: ")
 			var withdrawAmount float64
@@ -106,7 +87,7 @@ func main() {
 
 			accountBalance -= withdrawAmount
 			fmt.Println("Balance updated! New amount: ", accountBalance)
-			writeFloatToFile(accountBalance, accountBalanceFile)
+			fileops.WriteFloatToFile(accountBalance, accountBalanceFile)
 		default:
 			fmt.Println("Have a good day")
 			fmt.Println("Thanks for choosing my bank")
